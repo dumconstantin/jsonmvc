@@ -6,3 +6,4 @@
 /src/.webpack.js
 *.log
 *.tix
+output.js

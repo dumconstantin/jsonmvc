@@ -14,13 +14,18 @@ type ValuePatch =
 
 pathReg = regex "^(/[a-zA-Z0-9]*)+$" noFlags
 
-isPatch :: String -> Either String Boolean
-isPatch x = flip test x <$> pathReg
+isPath :: String -> Boolean
+isPath x = map (\y -> test y x) pathReg
 
-addPatch :: String -> String -> Maybe ValuePatch
-addPatch path value = if true then
-  Just ({
+isValue :: forall a. a -> Boolean
+isValue x = true
+
+addPatch :: String -> String -> Either String ValuePatch
+addPatch x y
+  | isPath x /= true = Left "The path is not valid"
+  | isValue y /= true = Left "The value is not valid"
+  | otherwise = Right ({
     op: "add"
-  , path: path
-  , value: value
-  }) else Nothing
+  , path: x
+  , value: y
+  })

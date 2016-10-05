@@ -29,8 +29,42 @@
     }
   })
 
+
+  [
+    /foo, -> return prevFoo.length === foo.length ? false : true
+  ]
+
   node("/foo/bar:ignore(length=0)", reducerF)
 
 - The first line of defence to avoid unnecessary recalculation is to enable caching of
   values between transformations so that a transformation is only triggered if the dynamic
   node its listening to outputs a different value
+
+- Add indexes similar to firebase so that transactions linking with ids are possbile
+
+- Simply state update logic:
+db.data({
+  foo: '/bar/baz',
+  bam: '/bam/bam'
+}).onValue(data => {
+  self.data = data
+  self.update()
+})
+
+where ``` db.data ``` will return a stream of data changes that gives the same data plus the new changes.
+In turn each data property will listen to the database updates.
+The database will support batch updates like these to avoid individual listeners.
+By having a batch update setup we give a declarative way of describing the full data set required for
+a component to function - this way powerfull optimisations are possible plus a enhanced control.
+
+- Adding a transformation of data in the view is a very bad idea. E.g.
+
+View.data(this, {
+  foo: ['/foo/bar', length]
+})
+
+This way the view is inconsistent with the data structure, if a data transformation is needed then
+a dynamic node should be created on the data tree. In order to ensure this, all data declaration
+should happen outside the View module or statically inside it.
+
+

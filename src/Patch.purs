@@ -9,19 +9,22 @@ import Data.String.Regex
 newtype Path = Path String
 newtype Value = Value String
 
+type ValuePatch = { path:: String, value:: String }
+type FromPatch = { path:: String, from:: String }
+type RemovePatch = { path:: String }
+
 data Patch =
-  Add Path Value |
-  Test Path Value |
-  Replace Path Value |
-  Move Path Path |
-  Copy Path Path |
-  Remove Path
+  Add ValuePatch |
+  Test ValuePatch |
+  Replace ValuePatch |
+  Move FromPatch |
+  Copy FromPatch |
+  Remove RemovePatch
+
+pathRegex = regex "^(\\/[a-z0-9~\\-%^|\"\\ ]*)*$" noFlags
 
 isPath :: String -> Boolean
-isPath x = test y x where
-  y = unsafePartial
-    case regex "^(\\/[a-z0-9~\\-%^|\"\\ ]*)*$" noFlags of
-      Right r -> r
+isPath x = isRight (map <$> test pathRegex x)
 
 isValue :: forall a. a -> Boolean
 isValue x = true
@@ -39,24 +42,10 @@ parseValue x =
      else Right x
 
 createPatch :: forall a. Patch -> Either String Path -> Either String a -> Either String Patch
-createPatch op x y
-  | isRight x && isRight y = op x y
-  | otherwise = x
+createPatch dataType obj
+  | isPath obj.path && isRight y = dataType x
+  | otherwise = obj
 
-add :: forall a. String -> a -> Either String Patch
-add path value = createPatch Add (parsePath path) (parseValue value)
+valuePatch :: forall a. Operation -> String -> a -> Patch
+valuePatch op path value = 
 
-testPatch :: forall a. String -> a -> Either String Patch
-testPatch path value = createPatch Test (parsePath path) (parseValue value)
-
-replace :: forall a. String -> a -> Either String Patch
-replace path value = createPatch Test (parsePath path) (parseValue value)
-
-move :: String -> String -> Either String Patch
-move fromPath toPath = createPatch Test (parsePath fromPath) (parsePath toPath)
-
-copy :: String -> String -> Either String Patch
-copy fromPath toPath = createPatch Test (parsePath fromPath) (parsePath toPath)
-
-remove :: String -> Either String Patch
-remove path = createPatch Remove (parsePath path) Right Nothing

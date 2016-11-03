@@ -68,3 +68,19 @@ a dynamic node should be created on the data tree. In order to ensure this, all 
 should happen outside the View module or statically inside it.
 
 
+------
+-----
+Dynamic nodes are of three cathegories: alterating, combinating and mixed.
+Based on the type of dynamic node optimisations can be performed - combinating can cache
+the past values and only apply the new value, alterating can cache the context
+while mixed cannot be predicted.
+
+At compilation the dynamic nodes are parsed and a new code is generated that is optimal
+similar to how Emscriptem will take C code and generate JavaScript code.
+A help in this regard will be using a standard library for declaring transformations.
+
+Another optimisation is using tests declaration afferent to the dynamic node in order
+to generate subsequent better code optimised for processing.
+
+
+

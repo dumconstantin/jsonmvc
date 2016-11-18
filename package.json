@@ -23,10 +23,5 @@
   "bugs": {
     "url": "https://github.com/dumconstantin/jsonmvc/issues"
   },
-  "homepage": "https://github.com/dumconstantin/jsonmvc#readme",
-  "devDependencies": {
-    "bower": "^1.7.9",
-    "pulp": "^9.0.1",
-    "purescript": "^0.9.1"
-  }
+  "homepage": "https://github.com/dumconstantin/jsonmvc#readme"
 }

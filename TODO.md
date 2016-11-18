@@ -84,3 +84,47 @@ to generate subsequent better code optimised for processing.
 
 
 
+-----
+-----
+
+A sample interface:
+
+---- Model ----
+
+import { db } from 'jsonmvc'
+
+{
+  foo: {
+    bar: db.on(['/bam', '/baz'], (bam, baz) => {
+
+    })
+  }
+}
+
+--- View ---
+<div data-bind="{
+  foo: '/bar/baz',
+  bam: '/bar/bam',
+  boo: '/boo/bam'
+}">
+  <h1>{ data.foo }</h1>
+  <h2>{ data.bam }</h2>
+
+  <ul data-each="/foo/bam">
+    <li>{ foo } is for { data.foo }</li>
+  </ul>
+
+  <div data-bind="{
+    foo: '/boo/baa'
+  }">
+    { data.foo }
+  </div>
+
+</div>
+
+'#foo': {
+  bam: '/bar/bam',
+  baz: '/boo/ba'
+}
+
+

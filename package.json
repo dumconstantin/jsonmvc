@@ -4,7 +4,7 @@
   "description": "The JSON Architecture MVC implementation",
   "main": "index.js",
   "scripts": {
-    "test": "node test/db.js"
+    "test": "node test/graph.js"
   },
   "repository": {
     "type": "git",

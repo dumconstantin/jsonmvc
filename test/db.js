@@ -1,5 +1,19 @@
 'use strict'
 var db = require('./../src/db')
+var fs = require('fs')
+
+var schema = {
+  foo: {
+    type: {
+      type: 'object',
+      properties: {
+        'bar': 2
+      }
+    }
+  }
+}
+
+db.schema(schema)
 
 var patch = {
   op: 'add',
@@ -14,6 +28,10 @@ var node = {
     return baz + ' joiner ' + bam
   }
 }
+
+db.on('/foo2', x => {
+  console.log('value was updated', x)
+})
 
 db.node(node)
 
@@ -43,3 +61,12 @@ var node2 = {
 db.node(node2)
 
 console.log('Second dynamic', db.get(node2.path))
+
+var patch3 = {
+  op: 'add',
+  path: '/foo/bar/baz',
+  value: 'the bam!'
+}
+
+db.apply(patch3)
+

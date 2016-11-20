@@ -10,16 +10,56 @@ const parsePath = R.pipe(
   R.tail
 )
 
-
 let db = {
   foo: {
     bar: {
-      baz: null
     }
   }
 }
 
+let listeners = {}
+let schema = {}
 let nodes = {}
+
+const callListeners = paths => {
+
+  let paths2 = paths.map(parsePath)
+
+  let found = R.map(x => {
+    let stack = []
+    let result = []
+    let n
+    let i
+    let t
+
+    let first = R.keys(nodes)
+    stack.push([first])
+
+    while (stack.length > 0) {
+      n = stack.pop()
+      for (i = 0; i < n.length; i += 1) {
+        t = R.path(n[i], nodes)
+
+        if (t) {
+          if (t._isDynamic) {
+            if (t.paths.indexOf(x) !== -1) {
+              result.push(n[i])
+            }
+          } else {
+            R.keys(t).map(y => {
+              stack.push(n[i].push(y))
+            })
+          }
+        }
+      }
+    }
+
+    console.log('Result is', result)
+
+  }, paths)
+
+  console.log('Found', found)
+}
 
 const apply = patch => {
 
@@ -30,9 +70,12 @@ const apply = patch => {
   let errors = jsonPatch.validate(patch, db)
 
   if (errors !== undefined) {
+    console.log(errors)
     throw errors
   } else {
+
     jsonPatch.apply(db, patch)
+    callListeners(R.map(x => x.path, patch))
   }
 
 }
@@ -62,21 +105,33 @@ const get = path => {
 
 }
 
-const on = path => {
+const on = (path, fn) => {
+  let path2 = parsePath(path)
 
+  if (R.path(path2, listeners) === undefined) {
+    listeners = R.assocPath(path2, [], listeners)
+  }
+
+  R.path(path2, listeners).push(fn)
 }
 
 const node = o => {
   let path = parsePath(o.path)
   nodes = R.assocPath(path, {
+    _isDynamic: true,
     paths: o.paths,
     fn: o.fn
   }, nodes)
+}
+
+const useSchema = rawSchema => {
+
 }
 
 module.exports = {
   apply: apply,
   get: get,
   on: on,
-  node: node
+  node: node,
+  schema: useSchema
 }

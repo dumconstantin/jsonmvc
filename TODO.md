@@ -129,3 +129,5 @@ import { db } from 'jsonmvc'
 
 
 !!!! Implement https://github.com/snabbdom/snabbdom as the virtual dom layer
+!!!! Actually... Inferno might be a much better idea as it maps to static/dynamic content
+https://github.com/trueadm/inferno

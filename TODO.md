@@ -128,3 +128,4 @@ import { db } from 'jsonmvc'
 }
 
 
+!!!! Implement https://github.com/snabbdom/snabbdom as the virtual dom layer

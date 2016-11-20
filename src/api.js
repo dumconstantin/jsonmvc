@@ -9,6 +9,15 @@
 // exposed api the developer can use db.get("/schema/errors")
 // when it needs it
 
+// -------
+// Ideas
+// -------
+// A schema can be added only once - after that the system 
+// does not allow any other schema to be added.
+// In this way the db can be used without a schema (not recommened)
+// but also provide a runtime mode that does not go through
+// a build process - which makes it easier for developers
+// to use and try out the system.
 
 // triggerPath(path)
 // ------
@@ -94,6 +103,12 @@
 // -----
 // Checks if a given path exists
 
+
+// useSchema(schema)
+// ----
+// Makes this the schema to be used.
+// Cannot be changed later.
+
 // -----
 // Exposed api
 // -----
@@ -101,3 +116,4 @@
 // get: nodeValue
 // has: pathExists
 // patch: applyPatch
+// useSchema: useSchema

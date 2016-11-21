@@ -1,24 +1,10 @@
 'use strict'
 const decomposePath = require('./decomposePath')
+const uniq = require('./uniq')
 
 // Implement https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm for faster search
 
-const uniq = xs => {
-  let seen = {};
-  let out = [];
-  let j = 0;
 
-  for (let i = 0, len = xs.length; i < len; i += 1) {
-    let item = xs[i];
-
-    if (!seen[item]) {
-      seen[item] = true;
-      j += 1
-      out[j] = item;
-    }
-  }
-  return out
-}
 
 const extendDeps = deps =>
   Object

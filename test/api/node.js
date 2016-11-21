@@ -2,6 +2,9 @@ var db = require('./../../src/index')()
 
 var fn = x => x
 
+/*
+db.get('/foo')
+
 db.patch({
   op: 'add',
   path: '/a/b/c/bam',
@@ -19,13 +22,14 @@ db.patch({
   path: '/goo',
   value: 'This is goo'
 })
+*/
 
-db.node('/foo', ['/a/b/c'], fn)
-db.node('/a/b/c/bar', ['/a/b/c/bam', '/a/b/c/baz'], (x, y) => x + y)
-db.node('/bar', ['/foo', '/goo', '/roo'], (x, y, z) => {
-  x.baz += y + z
+db.node('/foo', ['/a/b'], fn)
+db.node('/a/b/c/bar', ['/c'], (x, y) => x + y)
+db.node('/c/d', ['/f'], (x, y) => {
+  x.baz += y
   return x
 })
-db.node('/roo', ['/foo'], x => x)
+db.node('/f/x/j', ['/a/b/c'], x => x)
 
-console.log(JSON.stringify(db.get('/bar'), null, ' '))
+// console.log(JSON.stringify(db.get('/goo'), null, ' '))

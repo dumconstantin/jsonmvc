@@ -2,6 +2,8 @@
 const jsonPatch = require('fast-json-patch')
 const getValue = require('./../fn/getValue')
 const nestingPatches = require('./../fn/nestingPatches')
+const decomposePath = require('./../fn/decomposePath')
+const uniq = require('./../fn/uniq')
 
 /**
  * patch
@@ -25,4 +27,25 @@ module.exports = db => patch => {
   })
 
   let errors = jsonPatch.apply(db.static, patch)
+
+  console.log('Triggers', db.updates.triggers)
+
+  let trigger = []
+  patch.forEach(x => {
+    let parts = decomposePath(x.path)
+    parts.push(x.path)
+    parts.forEach(y => {
+      if (db.updates.triggers[y]) {
+        trigger.push(db.updates.triggers[y])
+      }
+    })
+  })
+
+  trigger = flatten(trigger)
+  trigger = uniq(trigger)
+
+  console.log(trigger)
+
+
+
 }

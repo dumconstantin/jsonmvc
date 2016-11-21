@@ -17,7 +17,7 @@ module.exports = () => {
     },
     updates: {
       triggers: {},
-      listeners: {}
+      fns: {}
     }
   }
 

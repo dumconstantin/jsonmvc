@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/dumconstantin/jsonmvc#readme",
   "devDependencies": {
-    "fast-json-patch": "^1.1.1",
-    "ramda": "^0.22.1"
+    "fast-json-patch": "^1.1.1"
   }
 }

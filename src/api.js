@@ -8,6 +8,12 @@
 // also instead of adding another method to the
 // exposed api the developer can use db.get("/schema/errors")
 // when it needs it
+//
+// - "/schema/patches"
+// get the list of patches that generated the current db
+// or be informed when a new patch is made
+//
+// - "/
 
 // -------
 // Ideas
@@ -32,10 +38,9 @@
 
 // nodeValue(path)
 // ------
-// Get the value at the given path regardless if its
-// a dynamic or static node
+// Get the value at the given path
 //
-// 1. if is a dynamic node then get nodeValue for each of its node
+// 1. if is a dynamic node then get nodeValue for each of its own nodes
 // 2. call the fn with the value args
 // 3. return the result
 //
@@ -45,24 +50,24 @@
 // 7. return the result
 
 
-// findStatic(path)
+// affectsPath(path)
 // ------
 // Find all the static paths that when changed will influence
 // the given path
 //
 // 1. if path is a static node then return [path]
-// 2. else findStatic on the nodes of the dynamic nodes
+// 2. else affectsPath on the nodes of the dynamic node
 // 3. flatten the result and return
 
 
 // unsubscribe(path)
 // ------
 // Removes a listener from the given path
-// Once called it needs to make sure synchronusely
+// Once called it needs to make sure sync
 // that no other process will call the listener until finished
 //
 // 1. remove it from listeners
-// 2. remote it from the 'listenersTriggers'
+// 2. remove it from the 'listenersTriggers'
 
 
 // addListener(path, fn)
@@ -71,13 +76,13 @@
 // which will call the fn with the updated value
 //
 // 1. create a listener at the path in "listeners"
-// 2. findStatic at the given path and add them to "listenersTriggers"
+// 2. affectsPath at the given path and add them to "listenersTriggers"
 // 3. return unsubscribe(path) function
 
 
 // checkCyclic(parent, children)
 // ------
-// Checks if at the new mounted path there will be a cyclic
+// Checks if at the new mounted path will form be a cyclic
 // relation with it's children
 
 

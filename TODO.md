@@ -131,3 +131,26 @@ import { db } from 'jsonmvc'
 !!!! Implement https://github.com/snabbdom/snabbdom as the virtual dom layer
 Seems like an interesting abstraction over snabbdom: https://github.com/AlexGalays/kaiju
 Look over their observable source
+
+
+[TESTING]
+
+1. Full json patch testing using https://github.com/Starcounter-Jack/JSON-Patch/tree/master/test/spec
+2. Integrate with FakerJS to generate randomized datasets & patches see http://json-schema-faker.js.org/
+3. Build a generator for fake dynamic nodes using the datasets
+4. Integrate jsPerf to get benchmarks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

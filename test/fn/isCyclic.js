@@ -1,21 +1,10 @@
-var isCyclic = require('./../src/isCyclic')
+const isCyclic = require('./../../src/fn/isCyclic')
 
-var d = {
-  'a': {
-    nodes: ['b', 'c']
-  },
-  'b': {
-    nodes: ['e']
-  },
-  'c': {
-    nodes: ['g']
-  },
-  'e': {
-    nodes: ['f']
-  },
-  'f': {
-    nodes: ['g']
-  }
+const d = {
+  '/a/b/c': ['/b/c', '/d'],
+  '/b/c': ['/g'],
+  '/d/f/g': ['/m/a'],
+  '/m/a': ['/a']
 }
 
-console.log(isCyclic(d))
+console.log('Is cyclic', isCyclic(d))

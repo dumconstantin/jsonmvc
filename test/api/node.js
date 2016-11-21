@@ -14,10 +14,18 @@ db.patch({
   value: 'baz'
 })
 
-console.log(JSON.stringify(db.db, null, ' '))
+db.patch({
+  op: 'add',
+  path: '/goo',
+  value: 'This is goo'
+})
+
 db.node('/foo', ['/a/b/c'], fn)
 db.node('/a/b/c/bar', ['/a/b/c/bam', '/a/b/c/baz'], (x, y) => x + y)
+db.node('/bar', ['/foo', '/goo', '/roo'], (x, y, z) => {
+  x.baz += y + z
+  return x
+})
+db.node('/roo', ['/foo'], x => x)
 
-
-console.log(db.get('/foo'))
-
+console.log(JSON.stringify(db.get('/bar'), null, ' '))

@@ -18,7 +18,7 @@ module.exports = db => patch => {
     let path = x.path.split('/')
     path = path.slice(0, path.length - 1).join('/')
 
-    if (x.op === 'add' && getValue(db, path) === null) {
+    if (x.op === 'add' && getValue(db.static, path) === null) {
       let patches = nestingPatches(db.static, x.path)
       jsonPatch.apply(db.static, patches)
     }

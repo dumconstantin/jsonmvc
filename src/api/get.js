@@ -1,5 +1,5 @@
 'use strict'
-const getValue = require('./../fn/getValue')
+const getNode = require('./../fn/getNode')
 
 
 /**
@@ -8,5 +8,5 @@ const getValue = require('./../fn/getValue')
  * Gets a value
  */
 module.exports = db => path => {
-  return getValue(db, path)
+  return getNode(db, path)
 }

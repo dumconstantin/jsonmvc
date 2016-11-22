@@ -197,6 +197,9 @@ in your data table.
   userName: '/user/name'
 }
 
+// value & key namings are forbidden
+// in order to be available in block scopes
+
 <div id="123">
   <h1>data.title</h1>
   <span>Your name is data.userName</span>
@@ -205,6 +208,23 @@ in your data table.
     <li data-each="data.articles">
       <p>data.articles[key].title</p>
       <p>data.articles[key].description</p>
+    </li>
+  </ul>
+  <button id="foo"></button>
+</div>
+
+<div id="123">
+  <h1>{ title }</h1>
+  <span>Your name is { userName }</span>
+  <p data-if="{ newUser }">Welcome new user</p>
+  <ul>
+    <li data-each="{ articles }">
+      <span>Number { key }</span>
+      <p>{ value.title }</p>
+      <p>{ value.description }</p>
+      <span data-each="{ value.comments }">
+
+      </span>
     </li>
   </ul>
   <button id="foo"></button>
@@ -230,5 +250,18 @@ db.patch([
   { .. },
   { .. }
 ])
+
+
+-------
+Implement https://snyk.io/ for testing the repo's vulnerabilities
+and https://nodesecurity.io for the node version
+--------
+
+------
+Save arrays in an object like manner? 
+db.on('/foo/bar/23')
+Where this would give the 23rd element?
+And that gives a way to change elements without getting the entire array
+
 
 

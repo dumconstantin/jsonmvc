@@ -8,8 +8,10 @@ const flatten = require('./../fn/flatten')
 const triggerListener = require('./../fn/triggerListener')
 
 
-console.error('Make patch polymorphic')
+console.log('Implement https://github.com/mafintosh/is-my-json-valid')
+console.log('Although something like this would be nicer and more efficient https://www.npmjs.com/package/joi-validate-patch')
 
+console.error('Make patch polymorphic')
 /*
 db.patch({
   op: 'add',

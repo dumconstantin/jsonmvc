@@ -9,9 +9,13 @@ module.exports = (obj, path) => {
     if (val[parts[i]]) {
       val = val[parts[i]]
     } else {
-      val = null
+      val = undefined
       break
     }
+  }
+
+  if (val instanceof Object === true) {
+    val = JSON.parse(JSON.stringify(val))
   }
 
   return val

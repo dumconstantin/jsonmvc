@@ -142,15 +142,93 @@ Look over their observable source
 
 
 
+[Interactivity]
+Create something special - an interactive tutorial to your application. In order to create the
+schema first enter some data, how you expect your application to look like. Will the user
+have a name, how would that be like?
+Record different values that generate regexes for you and also records those values for later review.
+
+The JSON schema is generated for you based on your content.
+A default HTML will be generated on that schema to help you get started.
+
+Instead of having a boilerplate of the framework or a sandbox project from which you get inspired,
+or even a step by step process in which you select what you need (like yeoman), this interactive
+part will help you really get started and following your train of though while creating your application.
+
+You'll learn the framework but not by reading documentation and through a clever tutorial, instead
+this interaction will guide you towards a well defined and balanced application from the get go.
+
+There's a low chance of making mistakes or making things not so efficient - the concepts are so
+simple and the framework so simplified that there is little room for error. You're crafting 
+a performant application from the very start.
+
+The best part is that you can revisit this any time you need some assistance - unlike other
+frameworks or systems that once you pass the introduction tutorial you won't ever need it again
+as the information there is irrelevant. But this system is different, it gets more relevant
+as the application grows.
 
 
 
+------
+Alternative way of structuring the view
+------
+
+In a given component disallow data less values. The global
+data holds all the data in the given component and is avaiable
+both for iterations or nestings.
+
+No else ifs. Just if. If you need and else then you need to define
+that as a condition on your data set.
+
+EACH -> if it's an object then KEY will be object key
+        if it's an array then KEY will be the index
+
+No longer needed the {{ }} brackets, just put data.something in your
+html and that's it. If you really want to use something as "data.blabla"
+just don't declare it on your data table - this will be shown in plain.
+Only properties that exist on your data set will be replaced.
+You will be notified if any data.blabla was matched but not found
+in your data table.
+
+'#123': {
+  title: '/foo/bar/title',
+  articles: '/articles/list',
+  newUser: '/isNewUser',
+  userName: '/user/name'
+}
+
+<div id="123">
+  <h1>data.title</h1>
+  <span>Your name is data.userName</span>
+  <p data-if="data.newUser">Welcome new user</p>
+  <ul>
+    <li data-each="data.articles">
+      <p>data.articles[key].title</p>
+      <p>data.articles[key].description</p>
+    </li>
+  </ul>
+  <button id="foo"></button>
+</div>
+
+db.on('/events/hover/#123 #foo')
+db.on('/events/click/#123 ul li')
+db.on('/events/click/#dis .foo[data-path="asdf"]:nth-child(2)[attr^=val]')
 
 
+--------
+Make patch polymorphic
+--------
+db.patch({
+  op: 'add',
+  path: '/foo/bar',
+  value: 123
+})
 
+db.patch('add', '/foo/bar', 123)
 
-
-
-
+db.patch([
+  { .. },
+  { .. }
+])
 
 

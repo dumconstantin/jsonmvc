@@ -1,6 +1,6 @@
 'use strict'
 const decomposePath = require('./decomposePath')
-const uniq = require('./uniq')
+const uniq = require('uniq')
 
 // Implement https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm for faster search
 

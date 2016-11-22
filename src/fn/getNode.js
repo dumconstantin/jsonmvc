@@ -14,7 +14,7 @@ const getNode = (db, path) => {
     let val = getValue(db.static, path)
 
     // If root was found
-    if (val !== null) {
+    if (val !== undefined) {
 
       if (val instanceof Object === true) {
         let nodes = db.dynamic.nesting[path]

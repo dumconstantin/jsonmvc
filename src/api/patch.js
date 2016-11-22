@@ -3,7 +3,27 @@ const jsonPatch = require('fast-json-patch')
 const getValue = require('./../fn/getValue')
 const nestingPatches = require('./../fn/nestingPatches')
 const decomposePath = require('./../fn/decomposePath')
-const uniq = require('./../fn/uniq')
+const uniq = require('uniq')
+const flatten = require('./../fn/flatten')
+const triggerListener = require('./../fn/triggerListener')
+
+
+console.error('Make patch polymorphic')
+
+/*
+db.patch({
+  op: 'add',
+  path: '/foo/bar',
+  value: 123
+})
+
+db.patch('add', '/foo/bar', 123)
+
+db.patch([
+  { .. },
+  { .. }
+])
+*/
 
 /**
  * patch
@@ -20,7 +40,7 @@ module.exports = db => patch => {
     let path = x.path.split('/')
     path = path.slice(0, path.length - 1).join('/')
 
-    if (x.op === 'add' && getValue(db.static, path) === null) {
+    if (x.op === 'add' && getValue(db.static, path) === undefined) {
       let patches = nestingPatches(db.static, x.path)
       jsonPatch.apply(db.static, patches)
     }
@@ -28,9 +48,10 @@ module.exports = db => patch => {
 
   let errors = jsonPatch.apply(db.static, patch)
 
-  console.log('Triggers', db.updates.triggers)
+  console.log(errors)
 
   let trigger = []
+
   patch.forEach(x => {
     let parts = decomposePath(x.path)
     parts.push(x.path)
@@ -44,8 +65,8 @@ module.exports = db => patch => {
   trigger = flatten(trigger)
   trigger = uniq(trigger)
 
-  console.log(trigger)
-
-
+  trigger.map(x => {
+    triggerListener(db, x)
+  })
 
 }

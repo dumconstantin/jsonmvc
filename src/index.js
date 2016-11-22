@@ -16,9 +16,11 @@ module.exports = () => {
       fns: {}
     },
     updates: {
+      cache: {},
       triggers: {},
       fns: {}
-    }
+    },
+    schema: {}
   }
 
   return {

@@ -1,6 +1,5 @@
 
 module.exports = path => {
-  path = path.replace(/\s/g, '')
   path = path.replace(/~0/g, '~')
   path = path.replace(/~1/g, '/')
   path = path.split('/')
